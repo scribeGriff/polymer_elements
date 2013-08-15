@@ -1,0 +1,55 @@
+<!--
+Copyright (c) 2013, scribeGriff (Richard Griffith)
+https://github.com/scribeGriff/polymer_elements
+All rights reserved.  Please see the LICENSE.md file.
+-->
+<!--
+/**
+* This is a port to Dart of the Polymer.js element g-icon:
+* github.com/Polymer/toolkit-ui/blob/master/elements/g-icon.html
+
+*/
+/**
+ * g-icon is a 24x24 glyph expressed as a background-image.
+ *
+ * Example:
+ *
+ *     <g-icon src="star.png"></g-icon>
+ *
+ * Optionally can use other size like 32x32 by setting the attribute "size" to "32":
+ *
+ *     <g-icon src="big_star.png" size="32"></g-icon>
+ *
+ * @class g-icon
+ */
+-->
+<polymer-element name="g-icon" attributes="src size">
+  <template>
+    <style>
+      @host {
+        * {
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+      #icon {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100% 100%;
+      }
+    </style>
+    <div id="icon" style="background-image:url({{src}}); width:{{size}}px; height:{{size}}px"></div>
+  </template>
+  <script type="application/dart">
+    import 'package:polymer/polymer.dart';
+
+    @CustomTag('g-icon')
+    class GIcon extends PolymerElement with ObservableMixin {
+      @observable String src = '';
+      @observable String size = '24';
+    }
+  </script>
+</polymer-element>

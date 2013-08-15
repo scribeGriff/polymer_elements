@@ -1,0 +1,7 @@
+name: polymer_elements
+version: 0.1.0
+author: Richard Griffith
+description: Polymer elements from Polymer Sandbox
+dependencies:
+  browser: any
+  polymer: any
