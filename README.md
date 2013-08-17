@@ -8,6 +8,7 @@ Note: At this point, I'm having a hard time determining if I am doing something 
 - Unable to pass a style attribute to an element.
 - When to use ChangeNotifierMixin instead of ObservableMixin?
 - Unable to apply most styles or attributes of an element.
+- What exactly does `extends="div" apply-author-styles` do and when should you use it?  I have not seen any effect when using it.
 
 This does not work (the elements still do not have background images):
 
@@ -22,4 +23,5 @@ This does not work (the elements still do not have background images):
 - g-field
 - g-form
 - g-checkbox
+- g-selection: largely taken from [Erik Grimes](https://github.com/ErikGrimes/polymer_elements/blob/master/lib/elements/polymer_selector/polymer_selection.dart) Dart version
 

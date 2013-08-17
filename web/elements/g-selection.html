@@ -1,0 +1,90 @@
+<!--
+Copyright (c) 2013, scribeGriff (Richard Griffith)
+https://github.com/scribeGriff/polymer_elements
+All rights reserved.  Please see the LICENSE.md file.
+-->
+<!--
+/**
+ * This is a port to Dart of the Polymer.js element g-selection:
+ * github.com/Polymer/toolkit-ui/blob/master/elements/g-selection.html
+ *
+ * Another port of the selection element can be found here:
+ * https://github.com/ErikGrimes/polymer_elements/blob/master/lib/elements/polymer_selector/polymer_selection.dart
+ * This version is largely based on Erik's work.
+ */
+-->
+<polymer-element name="g-selection" attributes="multi">
+  <template>
+    <style>
+      @host {
+        * {
+          display: none !important;
+        }
+      }
+    </style>
+  </template>
+  <script type="application/dart">
+    import 'package:polymer/polymer.dart';
+    import 'dart:async';
+
+    @CustomTag('g-selection')
+    class GSelection extends PolymerElement with ChangeNotifierMixin {
+      bool multi = false;
+      final items = [];
+      var onPolymerSelect;
+
+      void created() {
+        super.created();
+        this.clear();
+      }
+      void clear() {
+        this.items.clear();
+      }
+      get selection {
+        return this.multi ? this.items : this.items[0];
+      }
+      bool isSelected(var inItem) {
+        return this.items.indexOf(inItem) >= 0;
+      }
+      void setItemSelected(var inItem, var inIsSelected) {
+        if (inItem != null) {
+          if (inIsSelected) {
+            this.items.add(inItem);
+          } else {
+            var i = this.items.indexOf(inItem);
+            if (i >= 0) {
+              this.items.removeAt(i);
+            }
+          }
+          // This is taken directly from Erik's version but the js version seems
+          // much simpler using asyncFire.
+          // this.asyncFire("select", {isSelected: inIsSelected, item: inItem});
+          // Note: there is a TODO to change the js version to use
+          // summary notifications.
+          if(this.onPolymerSelect != null) {
+            runAsync(() {
+              this.onPolymerSelect([new PolymerSelectDetail(inIsSelected, inItem)]);
+            });
+          }
+        }
+      }
+      void select(var inItem) {
+        if (this.multi) {
+          this.toggle(inItem);
+        } else if (this.selection != inItem) {
+          this.setItemSelected(this.selection, false);
+          this.setItemSelected(inItem, true);
+        }
+      }
+      void toggle(var inItem) {
+        this.setItemSelected(inItem, !this.isSelected(inItem));
+      }
+    }
+    class PolymerSelectDetail {
+      final bool isSelected;
+      final item;
+
+      PolymerSelectDetail(this.isSelected, this.item);
+    }
+  </script>
+</polymer-element>
