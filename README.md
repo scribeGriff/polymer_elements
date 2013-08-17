@@ -3,12 +3,12 @@
 
 Note: At this point, I'm having a hard time determining if I am doing something wrong or if there is something missing from Polymer.dart.  Hopefully that will start to improve in the not too distant future.
 
-### Issues: ###
+### Issues, Notes and Questions: ###
 
 - Unable to pass a style attribute to an element.
 - When to use ChangeNotifierMixin instead of ObservableMixin?
 - Unable to apply most styles or attributes of an element.
-- What exactly does `extends="div" apply-author-styles` do and when should you use it?  I have not seen any effect when using it.
+- Using `extends="div"` (or any html element) allows the polymer element to inherit the attributes of the html element.  So, `extends="div"` allows you to set the `id="idname"` for the polymer element, for example.
 
 This does not work (the elements still do not have background images):
 
