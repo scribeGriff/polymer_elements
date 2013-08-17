@@ -6,12 +6,18 @@
     <script src="packages/polymer/boot.js"></script>
     <link rel="import" href="elements/g-icon.html">
     <link rel="import" href="elements/g-icon-button.html">
+    <link rel="import" href="elements/g-field.html">
+    <link rel="import" href="elements/g-form.html">
+    <link rel="import" href="elements/g-checkbox.html">
   </head>
 
   <body>
     <!-- Doesn't appear that binding style attributes is working yet? -->
     <g-icon src="elements/images/star_full.png"></g-icon>
     <g-icon-button src="elements/images/star_full.png"></g-icon-button>
+    <g-field label="newLabel" appearance="full"></g-field>
+    <g-form></g-form>
+    <g-checkbox title="checked"></g-checkbox>
     <script type="application/dart" src="polymer_elements.dart"></script>
   </body>
 </html>
