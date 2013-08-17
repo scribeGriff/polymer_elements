@@ -5,10 +5,13 @@
     <title>Polymer Dart Elements</title>
     <script src="packages/polymer/boot.js"></script>
     <link rel="import" href="elements/g-icon.html">
+    <link rel="import" href="elements/g-icon-button.html">
   </head>
 
   <body>
-    <g-icon src="elements/images/star_full.png" size='36'></g-icon>
+    <!-- Doesn't appear that binding style attributes is working yet? -->
+    <g-icon src="elements/images/star_full.png"></g-icon>
+    <g-icon-button src="elements/images/star_full.png"></g-icon-button>
     <script type="application/dart" src="polymer_elements.dart"></script>
   </body>
 </html>
