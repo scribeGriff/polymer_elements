@@ -10,7 +10,7 @@ All rights reserved.  Please see the LICENSE.md file.
  *
  * Another port of the selection element can be found here:
  * https://github.com/ErikGrimes/polymer_elements/blob/master/lib/elements/polymer_selector/polymer_selector.dart
- * This version is largely based on Erik's work.
+ * Erik's version is likely in better shape than this one as of 18Aug2013.
  */
 /**
  * g-selector is used to display a list of elements that can be selected.
@@ -64,11 +64,8 @@ All rights reserved.  Please see the LICENSE.md file.
 
     @CustomTag('g-selector')
     class GSelector extends PolymerElement with ChangeNotifierMixin {
-/*    Polymer('g-selector', {
-      *
-       * Gets or sets the selected element.  Default is to use the index
+      /** Gets or sets the selected element.  Default is to use the index
        * of the currently selected element.
-       *
        * If you want a specific attribute value of the selected element to be
        * used instead of index, set "valueattr" to that attribute name.
        *
@@ -79,88 +76,69 @@ All rights reserved.  Please see the LICENSE.md file.
        *       <div label="bar"></div>
        *       <div label="zot"></div>
        *     </g-selector>
-       *
-       * @attribute selected
-       * @type string
-       * @default null
-       *
-      selected: null,
-      *
-       * If true, multiple selections are allowed.
-       *
-       * @attribute multi
-       * @type boolean
-       * @default false
-       *
-      multi: false,
-      *
-       * Specifies the attribute to be used for "selected" attribute.
-       *
-       * @attribute valueattr
-       * @type string
-       * @default 'name'
-       *
-      valueattr: 'name',
-      *
-       * Specifies the CSS class to be used to add to the selected element.
-       *
-       * @attribute selectedClass
-       * @type string
-       * @default 'selected'
-       *
-      selectedClass: 'selected',
-     *
-       * Returns the model associated with the selected element.
-       *
-       * @attribute selectedModel
-       * @type Object
-       * @default null
-       *
-      selectedModel: null,
-      created: function() {
-        this.setAttribute('touch-action', 'none');
-      },
-      get items() {
-        return this.$.items.getDistributedNodes();
-      },
-      get selection() {
-        return this.$.selection.getSelection();
-      },
-      selectedChanged: function() {
+       */
+      String _selected = null;
+      get selected => _selected;
+      set selected(value) {
+        _selected = notifyPropertyChange(const Symbol('selected'), _selected, value);
+      }
+      /// If true, multiple selections are allowed.
+      bool multi = false;
+      /// Specifies the attribute to be used for "selected" attribute.
+      String valueattr = 'name';
+      /// Specifies the CSS class to be used to add to the selected element.
+      String selectedClass = 'selected';
+      /// Returns the model associated with the selected element.
+      var _selectedModel = null;
+      get selectedModel => _selectedModel;
+
+      void created() {
+        super.created();
+        this.xtag.attributes = ({
+          'touch-action': 'none'
+        });
+      }
+      // Are these roughly equivalent?
+      get items => this.query("items").xtag.getDistributedNodes(); //this.$.items.getDistributedNodes();
+      get selection => this.query("selection").xtag.selection; //this.$.selection.getSelection();
+
+      void selectedChanged() {
         this.valueToSelection(this.selected);
-      },
-      valueToSelection: function(inValue) {
+      }
+      void valueToSelection(inValue) {
         var item = this.items[this.valueToIndex(inValue)];
-        if (item) {
-          this.$.selection.select(item);
+        if (item != null) {
+          //this.$.selection.select(item); -> is this roughly equivalent?
+          this.query("selection").xtag.select(item);
           var t = item.templateInstance;
-          this.selectedModel = t ? t.model : undefined;
+          this._selectedModel = t ? t.model : null;
         } else {
-          this.selectedModel = null;
+          this._selectedModel = null;
         }
-      },
-      valueToIndex: function(inValue) {
+      }
+      Object valueToIndex(inValue) {
         // find an item with value == inValue and return it's index
-        for (var i=0, items=this.items, c; (c=items[i]); i++) {
+        // need to refractor this?
+        for (var i = 0, items = this.items, c; (c = items[i]); i++) {
           if (this.valueForNode(c) == inValue) {
             return i;
           }
         }
         // if no item found, the value itself is probably the index
         return inValue;
-      },
-      valueForNode: function(inNode) {
+      }
+      Object valueForNode(inNode) {
         return inNode[this.valueattr] || inNode.getAttribute(this.valueattr);
-      },
-      // events fired from <g-selection> object
-      selectionSelect: function(inEvent, inInfo) {
-        if (inInfo.item && this.selectedClass) {
-          inInfo.item.classList.toggle(this.selectedClass, inInfo.isSelected);
+      }
+      /// events fired from <g-selection> object
+      void selectionSelect(inEvent, inInfo) {
+        if (inInfo.item != null && this.selectedClass != null) {
+          inInfo.item.classes.toggle(this.selectedClass, inInfo.isSelected);
         }
-      },
-      // event fired from host
-      activateHandler: function(inEvent) {
-        if (this.notap) {
+      }
+      void activateHandler(inEvent) {
+        // how do you get this value from list of selector's attributes?
+        if (this.noTap) {
           return;
         }
         var items = this.items;
@@ -172,21 +150,20 @@ All rights reserved.  Please see the LICENSE.md file.
           } else {
             this.selected = selected;
           }
-          this.asyncFire('activate', {item: items[i]});
+          //this.asyncFire('activate', {item: items[i]});
         }
-      },
-      findDistributedTarget: function(target, nodes) {
+      }
+      Object findDistributedTarget(target, nodes) {
         // find first ancestor of target (including itself) that
         // is in inNodes, if any
-        while (target && target != this) {
-          var i = Array.prototype.indexOf.call(nodes, target);
+        while (target != null && target != this) {
+          var i = nodes.indexOf(target);
           if (i >= 0) {
             return i;
           }
           target = target.parentNode;
         }
       }
-    }); */
   }
   </script>
 </polymer-element>

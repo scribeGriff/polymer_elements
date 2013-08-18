@@ -23,5 +23,6 @@ This does not work (the elements still do not have background images):
 - g-field
 - g-form
 - g-checkbox
-- g-selection: largely taken from [Erik Grimes](https://github.com/ErikGrimes/polymer_elements/blob/master/lib/elements/polymer_selector/polymer_selection.dart) Dart version
+- g-selection: incomplete - see [Erik Grimes](https://github.com/ErikGrimes/polymer_elements/blob/master/lib/elements/polymer_selector/polymer_selection.dart) Dart version
+- g-selector: incomplete - see [Erik Grimes](https://github.com/ErikGrimes/polymer_elements/blob/master/lib/elements/polymer_selector/polymer_selector.dart) Dart version
 
